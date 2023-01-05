@@ -43,6 +43,10 @@ export class CypressTestRailReporter extends reporters.Spec {
       this.reporterOptions.refs = process.env.CYPRESS_TESTRAIL_REPORTER_REFS;
     }
 
+    if (process.env.CYPRESS_TESTRAIL_REPORTER_PROXY) {
+      this.reporterOptions.proxy = process.env.CYPRESS_TESTRAIL_REPORTER_PROXY;
+    }
+
     this.testRailApi = new TestRail(this.reporterOptions);
     this.testRailValidation = new TestRailValidation(this.reporterOptions);
 

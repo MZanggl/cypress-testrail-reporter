@@ -40,6 +40,7 @@ Add reporter to your `cypress.json`:
   "password": "password",
   "projectId": 1,
   "suiteId": 1,
+  "proxy": "http://some-proxy:8080"
 }
 ```
 
@@ -83,6 +84,9 @@ When you set `CYPRESS_TESTRAIL_REPORTER_REFS` in runtime environment variables, 
 A comma-separated list of references/requirements — requires TestRail 6.1 or later.
 
 **filter**: _string_ (optional: needs "includeAllInTestRun": false) Only return cases with matching filter string in the case title
+
+**proxy**: _string_ proxy to be used to access testrail. When you set `CYPRESS_TESTRAIL_REPORTER_PROXY` in
+environment variables, this option would be overwritten with it.
 
 ## Multiple suite
 

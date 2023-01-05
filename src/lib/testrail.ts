@@ -13,10 +13,16 @@ export class TestRail {
   private includeAll: Boolean = true;
   private caseIds: Number[] = [];
   private retries: number;
+  private proxy: { host: string, port: string, protocol: string };
 
   constructor(private options: TestRailOptions) {
     this.base = `${options.host}/index.php?/api/v2`;
     this.runId;
+
+    if (this.options.proxy) {
+      const proxyUrl = new URL(this.options.proxy)
+      this.proxy = {  protocol: proxyUrl.protocol, host: proxyUrl.hostname, port: proxyUrl.port }
+    }
   }
 
   /**
@@ -49,6 +55,7 @@ export class TestRail {
       axios({
         method:'get',
         url: url,
+        proxy: this.proxy,
         headers: { 'Content-Type': 'application/json' }, 
         auth: {
             username: this.options.username,
@@ -71,6 +78,7 @@ export class TestRail {
       axios({
         method: 'post',
         url: `${this.base}/add_run/${this.options.projectId}`,
+        proxy: this.proxy,
         headers: { 'Content-Type': 'application/json' },
         auth: {
           username: this.options.username,
@@ -100,6 +108,7 @@ export class TestRail {
       axios({
         method: 'post',
         url: `${this.base}/delete_run/${this.runId}`,
+        proxy: this.proxy,
         headers: { 'Content-Type': 'application/json' },
         auth: {
           username: this.options.username,
@@ -115,6 +124,7 @@ export class TestRail {
       axios({
         method: 'post',
         url: `${this.base}/add_results_for_cases/${this.runId}`,
+        proxy: this.proxy,
         headers: { 'Content-Type': 'application/json' },
         auth: {
           username: this.options.username,
@@ -137,6 +147,7 @@ export class TestRail {
       axios({
         method: 'post',
         url: `${this.base}/add_attachment_to_result/${resultId}`,
+        proxy: this.proxy,
         headers: { ...form.getHeaders() },
         auth: {
           username: this.options.username,
@@ -174,6 +185,7 @@ export class TestRail {
       axios({
         method: 'post',
         url: `${this.base}/close_run/${this.runId}`,
+        proxy: this.proxy,
         headers: { 'Content-Type': 'application/json' },
         auth: {
           username: this.options.username,
